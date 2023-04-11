@@ -3,10 +3,19 @@ package pro.sky.testofcode;
 import java.util.Objects;
 
 public class User {
-private final String login;
+private String login;
 private String email;
+public User(){}
 
     public User(String login, String email) {
+        if (nullString(login)) {
+            throw new IllegalArgumentException("*** login должен состоять из символов! ***");
+        }
+        if (!checkCorrectEMail(email)) {
+            throw new IllegalArgumentException("*** email должен состоять из символов, в том числе @ и . ***");
+        }
+        if (checkEquals2Strings(login,email)) {
+            throw new IllegalArgumentException("*** login не должен совпадать с email ***");}
         this.login = login;
         this.email = email;
     }
@@ -35,4 +44,15 @@ private String email;
     public int hashCode() {
         return Objects.hash(login, email);
     }
+
+    public static boolean nullString(String s) {
+        return (s == null || s.isEmpty() || s.isBlank());
+    }
+    public static boolean checkCorrectEMail(String email) {
+    return  (!nullString(email) && email.contains("@") && email.contains("."));
+    }
+    public static boolean checkEquals2Strings(String s1, String s2){
+        return s1.equals(s2);
+    }
+
 }
